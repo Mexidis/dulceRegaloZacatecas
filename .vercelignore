@@ -1,0 +1,24 @@
+# Git
+.git
+.gitignore
+
+# Node modules (if any)
+node_modules
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode
+.idea
+
+# Old valentines folder (keep this just in case)
+valentines/
+
+# Brain artifacts
+.gemini/
