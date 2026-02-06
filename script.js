@@ -6,7 +6,6 @@ const packageBuilder = {
     base: { id: 'base', name: 'Cheesecake Corazón', price: 350, category: 'base' },
     crafts: [], // Multiple selections allowed
     extras: [],
-    spicy: [] // Category for spicy items
 };
 
 // Product details database - UPDATED with new product structure
@@ -16,39 +15,39 @@ const productDetails = {
     'kit-base': {
         icon: '🎁',
         name: 'Kit Base',
-        price: 500,
+        price: 450,
         description: 'La experiencia esencial para conectar. Elige tu manualidad favorita para acompañar el postre.',
         detailedTitle: 'Kit Base: Crea y Conecta',
         detailedDescription: 'La base perfecta para una cita inolvidable. Incluye nuestro famoso Cheesecake Corazón y una actividad creativa a tu elección para romper la rutina.',
         includes: [
-            'Cheesecake Corazón Edición Especial (Red Velvet)',
-            'Manualidad a escoger (Pintura o Tarjetas)',
-            'Playlist Romántica Personalizada',
+            'Cheesecake Corazón Edición Especial (22cm)',
+            'Manualidad a escoger (Pintura o Juego de Tarjetas)',
+            'Carta personalizada con detalles románticos',
             'Empaque con detalles decorativos'
         ]
     },
     'kit-premium': {
         icon: '✨',
         name: 'Kit Premium',
-        price: 750,
-        description: 'La experiencia completa. Todo lo del Kit Base más elementos de lujo y el exclusivo Cuento con IA.',
+        price: 880,
+        description: 'La experiencia completa. Todo lo del Kit Base más elementos de lujo',
         detailedTitle: 'Kit Premium: La Experiencia Definitiva',
-        detailedDescription: 'Para quienes buscan impresionar. Elevamos el Kit Base con un brindis premium y un detalle único: un cuento personalizado de su historia de amor generado con IA e impreso.',
+        detailedDescription: 'Para quienes buscan impresionar. Elevamos el Kit Base con un brindis premium y otros detalles especiales',
         includes: [
-            'Todo lo del Kit Base',
-            'Vino Tinto Premium o Bebida Espumosa (750ml)',
-            'Cuento Personalizado con IA (Impreso)',
-            'Caja de Lujo con acabados premium'
+            'Todo lo del Kit Base con ambas manualidades',
+            'Vino Tinto o Bebida Espumosa',
+            'Chocolates Ferrero Rocher',
+            'Kit maridaje Sensorial (potenciador del juego de tarjetas)'
         ]
     },
     // Base Component (Internal use)
     'base': {
         icon: '🍰',
         name: 'Cheesecake Corazón',
-        price: 350,
+        price: 180,
         description: 'El corazón de la experiencia.',
         includes: [
-            'Cheesecake sabor Red Velvet',
+            'Cheesecake Edición Especial',
             'Decoración romántica'
         ]
     },
@@ -56,24 +55,26 @@ const productDetails = {
     'blind-painting': {
         icon: '🎨',
         name: 'Pintando en Pareja',
-        price: 150,
-        description: 'Dúo de Lienzos + Playbook Creativo. Rían con misiones secretas o conecten pintando juntos.',
+        price: 200,
+        description: 'Lienzo + Playbook Creativo. Rían con misiones secretas o conecten pintando juntos.',
         detailedTitle: 'Experiencia "Art for Two"',
-        detailedDescription: 'Diviértanse pintando con nuestro Playbook de dinámicas. Incluye modo "Misiones Secretas" para pintar a ciegas y reír, o modo "Conexión" para crear algo juntos.',
+        detailedDescription: 'Diviértanse pintando con nuestro Playbook de dinámicas. Incluye sugerencias variadas para pintar sin ser expertos.',
         includes: [
-            '2 Mini Lienzos',
+            'Lienzo 15x20cm',
             'Set de pinturas acrílicas',
             'Pinceles',
-            'Playbook de Dinámicas'
+            'Caballete',
+            'Paleta de pinturas',
+            'Guía de sugerencias para pintar'
         ]
     },
     'coleccion-vinculos': {
         icon: '🃏',
         name: 'Juego de Tarjetas',
-        price: 120, // Adjusted relative value if needed, or keep standard
+        price: 180, // Adjusted relative value if needed, or keep standard
         description: 'Colección Vínculos. Un juego de cartas para redescubrirse y profundizar.',
         detailedTitle: 'Mazo Vínculos: Conexión Profunda',
-        detailedDescription: '3 niveles de intensidad (Mente, Alma, Cuerpo) para acompañar su velada. Preguntas diseñadas para salir de la rutina.',
+        detailedDescription: '3 niveles de intensidad (Mente, Alma, Cuerpo) para acompañar su velada. Preguntas diseñadas para salir de la rutina y elevar el nivel de conexión con tu pareja.',
         includes: [
             'Mazo de 30 cartas premium',
             '3 Niveles de intensidad',
@@ -89,23 +90,9 @@ const productDetails = {
         detailedTitle: 'Decant de Perfume Premium',
         detailedDescription: 'Agrega un toque sensorial a tu regalo con un decant de perfume de alta gama seleccionado para la ocasión.',
         includes: [
-            'Decant de 5ml o 10ml (según disponibilidad)',
+            'Decant de 5ml ',
             'Aroma seleccionado',
             'Presentación de regalo'
-        ]
-    },
-    // Spicy items
-    'cata-sentidos': {
-        icon: '🎭',
-        name: 'Dinámica Sensual (+18)',
-        price: 180,
-        description: 'Cata de Sentidos | Modo Spicy. Retos físicos y sensoriales.',
-        detailedTitle: 'Experiencia Spicy: Menú de Degustación',
-        detailedDescription: 'Sube la temperatura con esta guía de maridaje sensorial y retos físicos.',
-        includes: [
-            'Guía Negra de retos',
-            'Antifaz de seda',
-            'Playlist sensual'
         ]
     },
 };
@@ -277,12 +264,6 @@ function setupEventListeners() {
             const productId = card.dataset.id;
             const category = card.dataset.category;
 
-            // Check if spicy and not verified
-            if (category === 'spicy' && !ageVerified) {
-                showModal('ageVerificationModal');
-                return;
-            }
-
             // Toggle product directly
             toggleProduct(card);
         });
@@ -297,12 +278,6 @@ function setupEventListeners() {
 
             const productId = card.dataset.id;
             const category = card.dataset.category;
-
-            // Check if spicy and not verified
-            if (category === 'spicy' && !ageVerified) {
-                showModal('ageVerificationModal');
-                return;
-            }
 
             openProductDetail(productId, card);
         });
@@ -461,8 +436,6 @@ function isProductSelected(productId, category) {
         return packageBuilder.crafts.some(item => item.id === productId);
     } else if (category === 'extra') {
         return packageBuilder.extras.some(item => item.id === productId);
-    } else if (category === 'spicy') {
-        return packageBuilder.spicy.some(item => item.id === productId);
     }
     return false;
 }
@@ -489,12 +462,7 @@ function toggleProduct(card) {
     if (isSelected) {
         // Remove - Update Tailwind classes
         card.classList.remove('border-rose-500', 'bg-gradient-to-br', 'from-slate-800/50', 'to-rose-500/10', 'shadow-lg', 'shadow-rose-500/30');
-        if (category === 'spicy') {
-            card.classList.remove('border-red-600');
-            card.classList.add('border-red-600/30');
-        } else {
-            card.classList.add('border-white/5');
-        }
+        card.classList.add('border-white/5');
 
         // Hide checkmark
         const checkmark = card.querySelector('.card-selected-icon');
@@ -512,18 +480,11 @@ function toggleProduct(card) {
             packageBuilder.crafts = packageBuilder.crafts.filter(item => item.id !== cardData.id);
         } else if (category === 'extra') {
             packageBuilder.extras = packageBuilder.extras.filter(item => item.id !== cardData.id);
-        } else if (category === 'spicy') {
-            packageBuilder.spicy = packageBuilder.spicy.filter(item => item.id !== cardData.id);
         }
     } else {
         // Add - Update Tailwind classes
         card.classList.remove('border-white/5');
-        if (category === 'spicy') {
-            card.classList.remove('border-red-600/30');
-            card.classList.add('border-red-600', 'shadow-lg', 'shadow-red-500/30');
-        } else {
-            card.classList.add('border-rose-500', 'bg-gradient-to-br', 'from-slate-800/50', 'to-rose-500/10', 'shadow-lg', 'shadow-rose-500/30');
-        }
+        card.classList.add('border-rose-500', 'bg-gradient-to-br', 'from-slate-800/50', 'to-rose-500/10', 'shadow-lg', 'shadow-rose-500/30');
 
         // Show checkmark
         const checkmark = card.querySelector('.card-selected-icon');
@@ -541,8 +502,6 @@ function toggleProduct(card) {
             packageBuilder.crafts.push(cardData);
         } else if (category === 'extra') {
             packageBuilder.extras.push(cardData);
-        } else if (category === 'spicy') {
-            packageBuilder.spicy.push(cardData);
         }
     }
 
@@ -582,8 +541,6 @@ function addCurrentProduct() {
             packageBuilder.crafts = packageBuilder.crafts.filter(item => item.id !== cardData.id);
         } else if (category === 'extra') {
             packageBuilder.extras = packageBuilder.extras.filter(item => item.id !== cardData.id);
-        } else if (category === 'spicy') {
-            packageBuilder.spicy = packageBuilder.spicy.filter(item => item.id !== cardData.id);
         }
     } else {
         // Add - Update Tailwind classes
@@ -601,8 +558,6 @@ function addCurrentProduct() {
             packageBuilder.crafts.push(cardData);
         } else if (category === 'extra') {
             packageBuilder.extras.push(cardData);
-        } else if (category === 'spicy') {
-            packageBuilder.spicy.push(cardData);
         }
     }
 
@@ -665,9 +620,6 @@ function updateCart() {
             cartText += ` + ${packageBuilder.extras.length} extra${packageBuilder.extras.length > 1 ? 's' : ''}`;
         }
 
-        if (packageBuilder.spicy.length > 0) {
-            cartText += ` + ${packageBuilder.spicy.length} spicy`;
-        }
     }
 
     // Calculate total price
@@ -708,11 +660,6 @@ function calculateTotalPrice() {
         total += extra.price;
     });
 
-    // 4. Spicy
-    packageBuilder.spicy.forEach(spicy => {
-        total += spicy.price;
-    });
-
     return total;
 }
 
@@ -721,6 +668,18 @@ function showOrderSummary() {
     // Check if a kit is selected
     if (!selectedKit) {
         alert('Por favor selecciona un Kit para continuar');
+        return;
+    }
+
+    // VALIDATION: Kit Base requires at least one craft
+    if (selectedKit === 'kit-base' && packageBuilder.crafts.length === 0) {
+        alert('⚠️ Para el Kit Base debes elegir al menos una actividad (Pintura o Tarjetas) antes de continuar.');
+
+        // Scroll to crafts section
+        const activitiesSection = document.querySelector('[data-category="craft"]')?.closest('.mb-20');
+        if (activitiesSection) {
+            activitiesSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
     }
 
