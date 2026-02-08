@@ -382,7 +382,30 @@ function openProductDetail(productId, cardElement) {
     };
 
     // Populate modal
-    document.getElementById('productDetailIcon').textContent = product.icon;
+    const iconElement = document.getElementById('productDetailIcon');
+    const imageContainer = document.getElementById('productDetailImageContainer');
+    const imageElement = document.getElementById('productDetailImage');
+
+    // Handle image display for Kit Base
+    if (productId === 'kit-base') {
+        // Show image, hide icon
+        imageContainer.classList.remove('hidden');
+        imageElement.src = 'tarjeta_kit_base.png';
+        imageElement.alt = product.name;
+        iconElement.style.display = 'none';
+    } else if (productId === 'kit-premium') {
+        // Show image, hide icon
+        imageContainer.classList.remove('hidden');
+        imageElement.src = 'kit_premium.png';
+        imageElement.alt = product.name;
+        iconElement.style.display = 'none';
+    } else {
+        // Show icon, hide image
+        imageContainer.classList.add('hidden');
+        iconElement.style.display = 'block';
+        iconElement.textContent = product.icon;
+    }
+
     document.getElementById('productDetailTitle').textContent = product.detailedTitle || product.name;
 
     // For kits, show the price differently
